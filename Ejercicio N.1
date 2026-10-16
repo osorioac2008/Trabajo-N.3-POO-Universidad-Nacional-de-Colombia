@@ -1,0 +1,158 @@
+import math
+
+class notas:
+    def __init__(self, nota_1, nota_2, nota_3, nota_4, nota_5):
+        self.tabla = [nota_1, nota_2, nota_3, nota_4, nota_5]    
+        self.promedio = sum(self.tabla) / len(self.tabla)
+        
+    def Promedio(self):
+        return self.promedio
+        
+    
+    def Desviacion_est(self):
+        valores = []
+        for nota in self.tabla:
+            valores.append(nota - self.promedio)
+            
+        cuadrados = []
+        for nota in valores:
+            cuadrados.append(nota**2)
+        
+        suma = 0
+        total = 0
+        for nota in cuadrados:
+            suma += nota
+            total += 1
+        
+        desviacion = math.sqrt(suma / (total - 1))
+        return desviacion
+            
+    def nota_mayor(self):
+        self.tabla.sort()
+        return self.tabla[-1]
+        
+    def nota_menor(self):
+            self.tabla.sort()
+            return self.tabla[0]
+        
+#---------------------------------------------------------------------
+
+import tkinter as tk
+from tkinter import messagebox
+
+Notas = tk.Tk() # Creando ventana
+
+Notas.title("Calculadora de notas") #Titulo de pagina
+
+Notas.geometry("300x500") #Ancho - Alto
+
+Notas.resizable(False, False) #Cambio de tamaño
+
+#---------------------------------------------------------------------- #Atributos de interfaz
+
+Nota_1= tk.Label(Notas, text="Nota N.1") #Creador de textos
+Nota_1.grid(row=0, column=0)
+
+ingreso_1 = tk.Entry(Notas, width=20) #Cuadro interactivo
+ingreso_1.grid(row= 0, column= 1, sticky="w", pady=20)#Poscicion
+
+
+Nota_2= tk.Label(Notas, text="Nota N.2") #Creador de textos
+Nota_2.grid(row=1, column=0)
+
+ingreso_2 = tk.Entry(Notas, width=20) #Cuadro interactivo
+ingreso_2.grid(row= 1, column= 1, sticky="w", pady=20)#Poscicion
+
+
+Nota_3= tk.Label(Notas, text="Nota N.3") #Creador de textos
+Nota_3.grid(row=2, column=0)
+
+ingreso_3 = tk.Entry(Notas, width=20) #Cuadro interactivo
+ingreso_3.grid(row= 2, column= 1, sticky="w", pady=20)#Poscicion
+
+
+Nota_4= tk.Label(Notas, text="Nota N.4") #Creador de textos
+Nota_4.grid(row=3, column=0)
+
+ingreso_4 = tk.Entry(Notas, width=20) #Cuadro interactivo
+ingreso_4.grid(row= 3, column= 1, sticky="w", pady=20)#Poscicion
+
+
+Nota_5= tk.Label(Notas, text="Nota N.5") #Creador de textos
+Nota_5.grid(row=4, column=0)
+
+ingreso_5 = tk.Entry(Notas, width=20) #Cuadro interactivo
+ingreso_5.grid(row= 4, column= 1, sticky="w", pady=20)#Poscicion
+
+#--------------------------------------------------------------------- Codigo, Metodos de interfaz
+
+def calcular():
+    try: # Decidir si proseguir o soltar error
+        nota_1 = str(ingreso_1.get()).strip()
+        nota_2 = str(ingreso_2.get()).strip()
+        nota_3 = str(ingreso_3.get()).strip()
+        nota_4 = str(ingreso_4.get()).strip()
+        nota_5 = str(ingreso_5.get()).strip()
+        
+        if nota_1 == "" or nota_2 == "" or nota_3 == "" or nota_4 == "" or nota_5 == "":
+            messagebox.showwarning("ADVERTENCIA", "Se debe llenar todos los campos")
+            return
+        
+        nota_1 = float(ingreso_1.get())
+        nota_2 = float(ingreso_2.get())
+        nota_3 = float(ingreso_3.get())
+        nota_4 = float(ingreso_4.get())
+        nota_5 = float(ingreso_5.get())
+    
+        estudiante = notas(nota_1, nota_2, nota_3, nota_4, nota_5)
+    
+        promedio.set(f"Promedio = {estudiante.Promedio(): .2f}")
+        desviacion.set(f"Desviacion Estandar = {estudiante.Desviacion_est(): .2f}")
+        mayor.set(f"Nota mayor = {estudiante.nota_mayor()}")
+        menor.set(f"Nota menor = {estudiante.nota_menor()}")
+        
+    except ValueError: #Soltar error
+        
+        messagebox.showerror("FALLO DE CALCULO", "Se debe ingresar notas validas")
+
+def borrar():
+    for ingreso in (ingreso_1, ingreso_2, ingreso_3, ingreso_4, ingreso_5):
+        ingreso.delete(0, tk.END)
+    
+    promedio.set("Promedio = ")
+    desviacion.set("Desviación estándar = ")
+    mayor.set("Nota mayor = ")
+    menor.set("Nota menor = ")
+
+#--------------------------------------------------------------------- #Atributos de interfaz
+
+envio = tk.Button(Notas, text="Envio", width=20, command = calcular) #Creador de botones
+envio.grid(row=5, column = 0)
+
+reinicio = tk.Button(Notas, text = "reinicio", width = 20, command = borrar)
+reinicio.grid(row = 5, column = 1)
+
+#--------------------------------------------------------------------- #Atributos de interfaz
+
+promedio = tk.StringVar(value = "Promedio = ") # Texto variable
+Promedio = tk.Label(Notas, textvariable = promedio, font = ("Times New Roman", 12, "bold")) #Cambio de texto
+Promedio.grid(row = 6, column = 0, columnspan = 2, pady = 10)
+
+desviacion = tk.StringVar(value = "Desviacion Estandar = ")
+Desviacion = tk.Label(Notas, textvariable = desviacion, font = ("Times New Roman", 12, "bold")) 
+Desviacion.grid(row = 7, column = 0, columnspan = 2, pady = 10)
+
+mayor = tk.StringVar(value = "Nota mayor = ")
+Mayor = tk.Label(Notas, textvariable = mayor, font = ("Times New Roman", 12, "bold")) 
+Mayor.grid(row = 8, column = 0, columnspan = 2, pady = 10)
+
+menor = tk.StringVar(value = "Nota menor = ")
+Menor = tk.Label(Notas, textvariable = menor, font = ("Times New Roman", 12, "bold")) 
+Menor.grid(row = 9, column = 0, columnspan = 2, pady = 10)
+
+#--------------------------------------------------------------------- 
+
+Notas.mainloop() # Inicializador
+
+# ---------------------------------------------------------------------
+
