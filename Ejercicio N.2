@@ -1,0 +1,399 @@
+import tkinter as tk
+from tkinter import messagebox
+import math
+
+#---------------------------------------------------------------Codigo
+
+import math
+
+class Figuras:
+    
+    def __init__(self):
+        self.volumen = 0.0
+        self.superficie = 0.0
+    
+    def Volumen(self):
+        pass
+    
+    def Superficie(self):
+        pass
+    
+class Cilindro(Figuras):
+    
+    def __init__(self, rad_cilindro, alt_cilindro):
+        super().__init__()
+        self.radio = rad_cilindro
+        self.altura = alt_cilindro
+    
+    def Volumen(self):
+        self.volumen = math.pi * (self.radio ** 2) * self.altura
+        return self.volumen
+
+    def Superficie(self):
+        self.superficie = 2 * math.pi * self.radio * (self.altura + self.radio)
+        return self.superficie
+
+class Esfera(Figuras):
+    
+    def __init__(self, rad_esfera):
+        super().__init__()
+        self.radio = rad_esfera
+    
+    def Volumen(self):
+        self.volumen = (4 * math.pi * (self.radio ** 3)) / 3
+        return self.volumen
+    
+    def Superficie(self):
+        self.superficie = 4 * math.pi * (self.radio ** 2)
+        return self.superficie
+
+class Piramide(Figuras):
+    
+    def __init__(self, alt_piramide, lad_piramide, anc_piramide):
+        super().__init__()
+        self.altura = alt_piramide
+        self.lado = lad_piramide
+        self.ancho = anc_piramide
+        self.area_base = self.lado * self.ancho
+            
+    def Volumen(self):
+        self.volumen = (self.area_base * self.altura) / 3
+        return self.volumen
+    
+    def Superficie(self):
+        if self.lado == self.ancho:
+            self.superficie = self.area_base + 4 * ((self.lado * self.altura) / 2)
+        else:
+            self.superficie = self.area_base + 2 * ((self.lado * self.altura) / 2) + 2 * ((self.ancho * self.altura) / 2)
+        return self.superficie
+
+class Cubo(Figuras):
+    
+    def __init__(self, lad_cubo):
+        super().__init__()
+        self.lado = lad_cubo
+    
+    def Volumen(self):
+        self.volumen = self.lado ** 3
+        return self.volumen
+    
+    def Superficie(self):
+        self.superficie = 6 * (self.lado ** 2)
+        return self.superficie
+    
+class Prisma(Figuras):
+    
+    def __init__(self, lados_base_prisma, lad_prisma, alt_prisma):
+        super().__init__()
+        self.altura = alt_prisma
+        self.lado = lad_prisma
+        if lados_base_prisma < 3:
+            raise ValueError("Se requiere un minimo de 3 lados")
+        self.lados_base = lados_base_prisma
+        self.area_base = (lados_base_prisma * (lad_prisma ** 2)) / (4 * math.tan(math.pi / lados_base_prisma))
+        self.area_cara = lad_prisma * alt_prisma
+    
+    def Volumen(self):
+        self.volumen = self.area_base * self.altura
+        return self.volumen
+    
+    def Superficie(self):
+        self.superficie = 2 * self.area_base + (self.lados_base * self.area_cara)
+        return self.superficie
+
+#---------------------------------------------------------------Codigo
+
+FigurasGeometricas = tk.Tk()
+
+FigurasGeometricas.title("Calculadora de Volumenes")
+
+FigurasGeometricas.geometry("650x500")
+
+FigurasGeometricas.config(padx = 10)
+
+FigurasGeometricas.resizable(False, False)
+#---------------------------------------------------------------Cilindro
+
+Figura_1 = tk.Label(FigurasGeometricas, text = "CILINDRO --->")
+Figura_1.grid(row = 0, column = 0)
+
+
+radio_Cilindro = tk.Label(FigurasGeometricas ,text = "Radio =")
+radio_Cilindro.grid(row = 0, column = 1, padx = 5, pady = 15)
+
+Radio_cilindro = tk.Entry(FigurasGeometricas, width = 15)
+Radio_cilindro.grid(row = 0, column = 2)
+
+
+altura_Cilindro = tk.Label(FigurasGeometricas, text = "Altura =")
+altura_Cilindro.grid(row = 0, column = 3)
+
+Altura_cilindro = tk.Entry(FigurasGeometricas, width = 15)
+Altura_cilindro.grid(row = 0, column = 4, padx = 5, pady = 15)
+
+#---------------------------------------------------------------Esfera
+
+Figura_2 = tk.Label(FigurasGeometricas, text = "ESFERA --->")
+Figura_2.grid(row = 1, column = 0)
+
+
+radio_Esfera = tk.Label(FigurasGeometricas, text = "Radio =")
+radio_Esfera.grid(row = 1, column = 1)
+
+Radio_esfera = tk.Entry(FigurasGeometricas, width = 15)
+Radio_esfera.grid(row = 1, column = 2, padx = 5, pady = 15)
+
+#---------------------------------------------------------------Piramide
+
+Figura_3 = tk.Label(FigurasGeometricas, text = "PIRAMIDE --->")
+Figura_3.grid(row = 2, column = 0)
+
+
+lado_Piramide =tk.Label(FigurasGeometricas, text = "Lado =")
+lado_Piramide.grid(row = 2, column = 1)
+
+Lado_piramide = tk.Entry(FigurasGeometricas, width = 15)
+Lado_piramide.grid(row = 2, column = 2, padx = 5, pady = 15)
+
+
+altura_Piramide = tk.Label(FigurasGeometricas, text = "Altura =")
+altura_Piramide.grid(row = 2, column = 3)
+
+Altura_piramide = tk.Entry(FigurasGeometricas, width = 15)
+Altura_piramide.grid(row = 2, column = 4, padx = 5, pady = 15)
+
+
+ancho_Piramide = tk.Label(FigurasGeometricas, text = "Ancho =")
+ancho_Piramide.grid(row = 2, column = 5)
+
+Ancho_piramide = tk.Entry(FigurasGeometricas, width = 15)
+Ancho_piramide.grid(row = 2, column = 6, padx = 5, pady = 15)
+
+#---------------------------------------------------------------Cubo
+
+Figura_4 = tk.Label(FigurasGeometricas, text = "CUBO --->")
+Figura_4.grid(row = 3, column = 0)
+
+
+lado_Cubo = tk.Label(FigurasGeometricas, text = "Lado =")
+lado_Cubo.grid(row = 3, column = 1)
+
+Lado_cubo = tk.Entry(FigurasGeometricas, width = 15)
+Lado_cubo.grid(row = 3, column = 2, padx = 5, pady = 15)
+
+#---------------------------------------------------------------Prisma
+
+Figura_5 = tk.Label(FigurasGeometricas, text = "PRIMSA --->")
+Figura_5.grid(row = 4, column = 0)
+
+
+lado_Prisma = tk.Label(FigurasGeometricas, text = "Lado =")
+lado_Prisma.grid(row = 4, column = 1)
+
+Lado_prisma = tk.Entry(FigurasGeometricas, width = 15)
+Lado_prisma.grid(row = 4, column = 2, padx = 5, pady = 15)
+
+
+altura_Prisma = tk.Label(FigurasGeometricas, text = "Altura =")
+altura_Prisma.grid(row = 4, column = 3)
+
+Altura_prisma = tk.Entry(FigurasGeometricas, width = 15)
+Altura_prisma.grid(row = 4, column = 4, padx = 5, pady = 15)
+
+
+lados_base_Prisma = tk.Label(FigurasGeometricas, text = "C. de lados =")
+lados_base_Prisma.grid(row = 4, column = 5)
+
+Lados_base_prisma = tk.Entry(FigurasGeometricas, width = 15)
+Lados_base_prisma.grid(row =4, column = 6, padx = 5, pady = 15)
+
+#---------------------------------------------------------------Funcion datos
+
+def calculo():
+    
+    try:
+              
+        # Cilindro
+        rad_cilindro = float(Radio_cilindro.get())
+        alt_cilindro = float(Altura_cilindro.get())
+
+        # Esfera
+        rad_esfera = float(Radio_esfera.get())
+
+        # Piramide
+        lad_piramide = float(Lado_piramide.get())
+        alt_piramide = float(Altura_piramide.get())
+        anc_piramide = float(Ancho_piramide.get())
+
+        # Cubo
+        lad_cubo = float(Lado_cubo.get())
+
+        # Prisma
+        lad_prisma = float(Lado_prisma.get())
+        alt_prisma = float(Altura_prisma.get())
+        lados_base_prisma = float(Lados_base_prisma.get())
+        
+        if lados_base_prisma < 3:
+            messagebox.showerror("ADVERTENCIA", "Se debe ingresar 3 o mas lados")
+            return
+    
+        # Objetos
+        Mi_cilindro = Cilindro(rad_cilindro, alt_cilindro)
+        
+        Mi_esfera = Esfera(rad_esfera)
+        
+        Mi_piramide = Piramide(lad_piramide, alt_piramide, anc_piramide)
+        
+        Mi_cubo = Cubo(lad_cubo)
+        
+        Mi_prisma = Prisma(lados_base_prisma, lad_prisma, alt_prisma )
+        
+        # Cambio variable 
+        
+        # --- Cilindro ---
+        
+        volumen_Cilindro.set(f"Volumen ---> {Mi_cilindro.Volumen(): .2f}")
+        superficie_Cilindro.set(f"Superficie ---> {Mi_cilindro.Superficie(): .2f}")
+        
+        # --- Esfera ---
+        
+        volumen_Esfera.set(f"Volumen ---> {Mi_esfera.Volumen(): .2f}")
+        superficie_Esfera.set(f"Superficie ---> {Mi_esfera.Superficie(): .2f}")
+        
+        # --- Piramide ---
+        
+        volumen_Piramide.set(f"Volumen ---> {Mi_piramide.Volumen(): .2f}")
+        superficie_Piramide.set(f"Superficie ---> {Mi_piramide.Superficie(): .2f}")
+        
+        # --- Cubo ---
+        
+        volumen_Cubo.set(f"Volumen ---> {Mi_cubo.Volumen(): .2f}")
+        superficie_Cubo.set(f"Superficie ---> {Mi_cubo.Superficie(): .2f}")
+        
+        # --- Prisma ---
+        
+        volumen_Prisma.set(f"Volumen ---> {Mi_prisma.Volumen(): .2f}")
+        superficie_Prisma.set(f"Superficie ---> {Mi_prisma.Superficie(): .2f}")
+    
+    except ValueError:
+        messagebox.showerror("FALLO DE CALCULO", "Solo se admiten numeros\n Asegurese de llenar todos los recuadros") 
+
+def limpieza():
+    
+    for valor in (Radio_cilindro, Altura_cilindro, Radio_esfera, Lado_piramide, Altura_piramide, Ancho_piramide, Lado_cubo, Lado_prisma, Altura_prisma, Lados_base_prisma):
+        valor.delete(0, tk.END)
+    
+    # Cilindro 
+    volumen_Cilindro.set("Volumen ---> ")
+    superficie_Cilindro.set("Superficie ---> ")
+    
+    # Esfera
+    volumen_Esfera.set("Volumen ---> ")
+    superficie_Esfera.set("Superficie ---> ")
+    
+    # Piramide
+    volumen_Piramide.set("Volumen ---> ")
+    superficie_Piramide.set("Superficie ---> ")
+    
+    # Cubo
+    volumen_Cubo.set("Volumen ---> ")
+    superficie_Cubo.set("Superficie ---> ")
+    
+    # Prisma 
+    volumen_Prisma.set("Volumen ---> ")
+    superficie_Piramide.set("Superficie ---> ")
+
+#---------------------------------------------------------------Botones
+
+calcular = tk.Button(FigurasGeometricas, text = "Calcular", width = 30, command = calculo)
+calcular.grid(row = 5, column = 1, columnspan = 3)
+
+limpiar = tk.Button(FigurasGeometricas, text = "Limpiar", width = 30)
+limpiar.grid(row = 5, column = 4, columnspan = 3)
+
+#---------------------------------------------------------------
+
+solucion = tk.Label(FigurasGeometricas, text = "RESPUESTAS", font = ("Times New Roman", 12, "bold"))
+solucion.grid(row = 7, column = 3, columnspan = 2, pady = 15)
+
+#---------------------------------------------------------------Resultado Cilindro
+
+cil = tk.Label(FigurasGeometricas, text = "CILINDRO", font = ("Times New Roman", 12, "bold"))
+cil.grid(row = 8, column = 0)
+
+
+volumen_Cilindro = tk.StringVar(value = "Volumen ---> ")
+Volumen_cilindro = tk.Label(FigurasGeometricas, textvariable = volumen_Cilindro, font = ("Times New Roman", 12))
+Volumen_cilindro.grid(row = 8, column = 2, columnspan = 2)
+
+
+superficie_Cilindro = tk.StringVar(value = "Superficie ---> ")
+Superficie_cilindro = tk.Label(FigurasGeometricas, textvariable = superficie_Cilindro, font = ("Times New Roman", 12))
+Superficie_cilindro.grid(row = 8, column = 4, columnspan = 2)
+
+#---------------------------------------------------------------Resultado Esfera
+
+esf = tk.Label(FigurasGeometricas, text = "ESFERA", font = ("Times New Roman", 12, "bold"))
+esf.grid(row = 9, column = 0)
+
+
+volumen_Esfera = tk.StringVar(value = "Volumen ---> ")
+Volumen_esfera = tk.Label(FigurasGeometricas, textvariable = volumen_Esfera, font = ("Times New Roman", 12))
+Volumen_esfera.grid(row = 9, column = 2, columnspan = 2)
+
+
+superficie_Esfera = tk.StringVar(value = "Superficie ---> ")
+Superficie_Esfera = tk.Label(FigurasGeometricas, textvariable = superficie_Esfera, font = ("Times New Roman", 12))
+Superficie_Esfera.grid(row = 9, column = 4, columnspan = 2)
+
+#---------------------------------------------------------------Resultado Piramide
+
+pir = tk.Label(FigurasGeometricas, text = "PIRAMIDE", font = ("Times New Roman", 12, "bold"))
+pir.grid(row = 10, column = 0)
+
+
+volumen_Piramide = tk.StringVar(value = "Volumen ---> ")
+Volumen_piramide = tk.Label(FigurasGeometricas, textvariable = volumen_Piramide, font = ("Times New Roman", 12))
+Volumen_piramide.grid(row = 10, column = 2, columnspan = 2)
+
+
+superficie_Piramide = tk.StringVar(value = "Superficie ---> ")
+Superficie_Piramide = tk.Label(FigurasGeometricas, textvariable = superficie_Piramide, font = ("Times New Roman", 12))
+Superficie_Piramide.grid(row = 10, column = 4, columnspan = 2)
+
+#---------------------------------------------------------------Resultado Cubo
+
+cub = tk.Label(FigurasGeometricas, text = "CUBO", font = ("Times New Roman", 12, "bold"))
+cub.grid(row = 11, column = 0)
+
+
+volumen_Cubo = tk.StringVar(value = "Volumen ---> ")
+Volumen_cubo = tk.Label(FigurasGeometricas, textvariable = volumen_Cubo, font = ("Times New Roman", 12))
+Volumen_cubo.grid(row = 11, column = 2, columnspan = 2)
+
+
+superficie_Cubo = tk.StringVar(value = "Superficie ---> ")
+Superficie_cubo = tk.Label(FigurasGeometricas, textvariable = superficie_Cubo, font = ("Times New Roman", 12))
+Superficie_cubo.grid(row = 11, column = 4, columnspan = 2)
+
+#---------------------------------------------------------------Resultado Prisma
+
+pri = tk.Label(FigurasGeometricas, text = "PRISMA", font = ("Times New Roman", 12, "bold"))
+pri.grid(row = 12, column = 0)
+
+
+volumen_Prisma = tk.StringVar(value = "Volumen ---> ")
+Volumen_prisma = tk.Label(FigurasGeometricas, textvariable = volumen_Prisma, font = ("Times New Roman", 12))
+Volumen_prisma.grid(row = 12, column = 2, columnspan = 2)
+
+
+superficie_Prisma = tk.StringVar(value = "Superficie ---> ")
+Superficie_prisma = tk.Label(FigurasGeometricas, textvariable = superficie_Prisma, font = ("Times New Roman", 12))
+Superficie_prisma.grid(row = 12, column = 4, columnspan = 2)
+
+#---------------------------------------------------------------
+
+FigurasGeometricas.mainloop()
+
+#---------------------------------------------------------------
+
